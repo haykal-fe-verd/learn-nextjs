@@ -97,6 +97,8 @@ export async function fetchCardData() {
 }
 
 const ITEMS_PER_PAGE = 6;
+
+//! done
 export async function fetchFilteredInvoices(query: string, currentPage: number) {
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
@@ -122,6 +124,10 @@ export async function fetchFilteredInvoices(query: string, currentPage: number) 
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
+        if (process.env.NODE_ENV === "development") {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+
         return invoices;
     } catch (error) {
         console.error("Database Error:", error);
@@ -129,6 +135,7 @@ export async function fetchFilteredInvoices(query: string, currentPage: number) 
     }
 }
 
+//! done
 export async function fetchInvoicesPages(query: string) {
     try {
         const data = await sql`SELECT COUNT(*)
@@ -143,6 +150,11 @@ export async function fetchInvoicesPages(query: string) {
   `;
 
         const totalPages = Math.ceil(Number(data[0].count) / ITEMS_PER_PAGE);
+
+        if (process.env.NODE_ENV === "development") {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+
         return totalPages;
     } catch (error) {
         console.error("Database Error:", error);
