@@ -162,6 +162,7 @@ export async function fetchInvoicesPages(query: string) {
     }
 }
 
+//! done
 export async function fetchInvoiceById(id: string) {
     try {
         const data = await sql<InvoiceForm[]>`
@@ -180,6 +181,10 @@ export async function fetchInvoiceById(id: string) {
             amount: invoice.amount / 100,
         }));
 
+        if (process.env.NODE_ENV === "development") {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+
         return invoice[0];
     } catch (error) {
         console.error("Database Error:", error);
@@ -187,6 +192,7 @@ export async function fetchInvoiceById(id: string) {
     }
 }
 
+//! done
 export async function fetchCustomers() {
     try {
         const customers = await sql<CustomerField[]>`
@@ -197,6 +203,10 @@ export async function fetchCustomers() {
       ORDER BY name ASC
     `;
 
+        if (process.env.NODE_ENV === "development") {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
+
         return customers;
     } catch (err) {
         console.error("Database Error:", err);
@@ -204,6 +214,7 @@ export async function fetchCustomers() {
     }
 }
 
+//! done
 export async function fetchFilteredCustomers(query: string) {
     try {
         const data = await sql<CustomersTableType[]>`
@@ -229,6 +240,10 @@ export async function fetchFilteredCustomers(query: string) {
             total_pending: formatCurrency(customer.total_pending),
             total_paid: formatCurrency(customer.total_paid),
         }));
+
+        if (process.env.NODE_ENV === "development") {
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+        }
 
         return customers;
     } catch (err) {
